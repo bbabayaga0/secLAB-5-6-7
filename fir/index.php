@@ -3,10 +3,6 @@
 include('connect.php');
 
 
-session_start();
-
-
-
 if(!empty($_POST['login']) and !empty($_POST['password'])){
   $login = $_POST['login'];
   $password = md5($_POST['password']);
@@ -16,13 +12,18 @@ if(!empty($_POST['login']) and !empty($_POST['password'])){
   $res = mysqli_query($link, $query);
   $user = mysqli_fetch_assoc($res);
 
+
+
   if(!empty($user)){
+    session_start();
+    $_SESSION['login'] = $_POST['login'];
     header('Location: page2.php');
+    exit();
   }else{
     echo('Ваши данные не те, топайте лесом');
   }
 
-  session_destroy();
+
 }
 ?>
 
